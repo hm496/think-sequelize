@@ -1,9 +1,3 @@
-/*
-* @Author: lushijie
-* @Date:   2017-08-23 09:44:20
-* @Last Modified by:   lushijie
-* @Last Modified time: 2017-11-03 11:36:23
-*/
 const helper = require('think-helper');
 const path = require('path');
 const Model = require('./lib/model.js');
@@ -17,24 +11,24 @@ module.exports = app => {
     const instance = new Cls(modelName, config, name);
     instance.models = models;
 
-    //set relation
-    let relations = instance.schemaOptions.relations;
-    if(relations) {
-      if(helper.isObject(relations)) {
+    // set relation
+    let relations = instance.defineOptions.relations;
+    if (relations) {
+      if (helper.isObject(relations)) {
         relations = [relations];
       }
-      relations.forEach((ele,index) => {
-        let relationModelName = Object.keys(ele).filter(e => {
+      relations.forEach((ele, index) => {
+        const relationModelName = Object.keys(ele).filter(e => {
           return e !== 'options';
         })[0];
 
-        let relationName = ele[relationModelName];
-        let relationInstance = model(relationModelName, config, m);
-        let relationOptions = Object.assign({}, ele.options);
+        const relationName = ele[relationModelName];
+        const relationInstance = model(relationModelName, config, m);
+        const relationOptions = Object.assign({}, ele.options);
 
-        let relationUnique = `${name}${relationName}${relationModelName}${relationOptions.as}`;
+        const relationUnique = `${name}${relationName}${relationModelName}${relationOptions.as}`;
         if (relationOptions.as) {
-          if(Relations[relationUnique]) {
+          if (Relations[relationUnique]) {
             return;
           } else {
             Relations[relationUnique] = true;
