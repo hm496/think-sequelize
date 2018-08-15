@@ -2,11 +2,14 @@ import {SequelizeStatic, Sequelize, Model, DefineAttributes, DefineOptions} from
 import Promise = require("bluebird");
 
 declare namespace ThinkSequelize {
+  interface Define {
+    attributes: DefineAttributes;
+    options?: DefineOptions<any>;
+    relations?: object[];
+  }
+
   interface InjectModel extends Model<any, any> {
-    define: {
-      attributes: DefineAttributes;
-      options?: DefineOptions<any>;
-    };
+    define: Define;
     getConnection(modelName?: string): Sequelize;
   }
 
